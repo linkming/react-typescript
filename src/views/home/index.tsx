@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './index.css'
 import http from './../../api/index'
 import { Input,Table,Tag,Divider } from 'antd';
-import Foot from './../footer/index';
 // , ColumnGroup
 const { Column } = Table;
 // import http from './../../api'
@@ -101,7 +100,6 @@ export default class Home extends Component {
     />
         </Table>
         </div>
-        <Foot></Foot>
      </div>)
   }
 }

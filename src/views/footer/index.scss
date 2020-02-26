@@ -1,0 +1,26 @@
+.footer{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 6px 0;
+    footer{
+        height: 24px;
+        ul{
+            display: flex;
+            padding-left: 0;
+            li{
+                list-style-type: none;
+                line-height: 24px;
+                flex: 1;
+                .bottom-icon-font{
+                    font-size: 24px; 
+                    color: #08c
+                }
+                .title{
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
