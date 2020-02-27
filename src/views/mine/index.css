@@ -1,0 +1,10 @@
+#root{
+    overflow: hidden;
+}
+.column{
+    width: 10px;
+    background-color: aquamarine;
+}
+/* .ant-input{
+    width: 100%;
+} */

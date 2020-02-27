@@ -7,7 +7,7 @@ export default class About extends Component {
     }
    render(){
      return (<div>
-       我是关于我们的页面
+       我是歌曲详情的页面
      </div>)
   }
 }

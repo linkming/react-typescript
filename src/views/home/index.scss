@@ -1,0 +1,21 @@
+#root{
+    overflow: hidden;
+}
+.search-input{
+    position: sticky;
+    top: 0;
+}
+.ul {
+    padding: 0;
+    overflow: scroll;
+    li{
+        list-style-type: none;
+        margin: 12px 0;
+        text-align: left;
+        img{
+            border-radius: 2px;
+            width: 30%
+        }
+        /* height:  */
+    }
+}

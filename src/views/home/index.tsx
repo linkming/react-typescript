@@ -1,47 +1,18 @@
 import React, { Component } from 'react'
-import './index.css'
+import './index.scss'
 import http from './../../api/index'
-import { Input,Table,Tag,Divider } from 'antd';
-// , ColumnGroup
-const { Column } = Table;
-// import http from './../../api'
+import { Input } from 'antd';
 
 export default class Home extends Component {
     state={
         num:'',
-        data:[  {
-            key: '1',
-            firstName: 'John',
-            lastName: 'Brown',
-            age: 32,
-            width:10,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-          },
-          {
-            key: '2',
-            width:10,
-            firstName: 'Jim',
-            lastName: 'Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-          },
-          {
-            key: '3',
-            width:10,
-            firstName: 'Joe',
-            lastName: 'Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-          },]
+        data:[]
     }
     // constructor(props:Object){
     //     super(props)
     // }
     componentDidMount(){
-      console.log(http)
+      // console.log(http)
     }
     onChange=(e:any)=>{
         const str = e.target.value
@@ -50,56 +21,33 @@ export default class Home extends Component {
         })
       }
       onBlur=()=>{
-        http.getSongs(this.state.num).then((res:object)=>{
-          console.log(res)
+        http.searchSongsByName(this.state.num).then((res:any)=>{
+          if (res.status===200) {
+            const {data}= res
+            console.log(JSON.parse(data.body))
+            this.setState(()=>{
+              return {data:JSON.parse(data.body).data.album.list}
+            })
+            console.log(this.state.data)
+          } else {
+            
+          }
         })
 
     }
    render(){
      return (<div>
-         <div>
-          <Input size="large" value={this.state.num} placeholder="请输入歌曲ID" 
-          onChange={this.onChange.bind(this)} onBlur={this.onBlur.bind(this)} />
-         </div>
-        <div>
-        <Table dataSource={this.state.data}>
-        {/* <ColumnGroup title="Name"> */}
-      <Column title="First Name" dataIndex="firstName" key="firstName" />
-      <Column title="Last Name" dataIndex="lastName" key="lastName" />
-    {/* </ColumnGroup> */}
-    <Column title="Age" dataIndex="age" key="age" />
-    <Column title="Address" dataIndex="address" key="address" />
-    <Column
-      title="Tags"
-      dataIndex="tags"
-      className="column"
-      key="tags"
-      render={tags => (
-        <span>
-          {tags.map((tag:any) => (
-            <Tag color="blue" key={tag}>
-              {tag}
-            </Tag>
-          ))}
-        </span>
-      )}
-    />
-    <Column
-      title="Action"
-      key="action"
-      width="10"
-      render={(text, record) => (
-        <span>
-          <a href="#abc">Invite 
-          {/* {record.lastName} */}
-          </a>
-          <Divider type="vertical" />
-          <a href="#abc">Delete</a>
-        </span>
-      )}
-    />
-        </Table>
-        </div>
+      <div className="search-input">
+        <Input size="large" value={this.state.num} placeholder="请输入歌曲名称" 
+        onChange={this.onChange.bind(this)} onBlur={this.onBlur.bind(this)} />
+      </div>
+      <ul className="ul">
+        {this.state.data.map( (item:any) => <li key={item.albumID}>
+          <img src={item.albumPic} alt="图片不存在"/>
+          <span>{item.albumName}</span>
+          <span>{item.singerName}</span>
+        </li> )}
+      </ul>
      </div>)
   }
 }

@@ -11,17 +11,14 @@ export default class Content extends Component {
     //     super(props)
     // }
     componentDidMount(){
-      console.log(require('./../footer'))
     }
    render(){
      return (<div>
        <main>
-         我是内容区
           <Router>
             <Route path="/home" component={Home} />
             <Route path="/about" component={About} />
           </Router>
-              
        </main>
      </div>)
   }
