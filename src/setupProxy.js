@@ -10,4 +10,12 @@ module.exports = function(app) {
         "^/api": "/"
        }
     }));
+  app.use(proxy.createProxyMiddleware('/local', { 
+       target: 'http://localhost:8000' ,
+       secure: false,
+       changeOrigin: true,
+       pathRewrite: {
+        "^/local": "/"
+       }
+    }));
 };

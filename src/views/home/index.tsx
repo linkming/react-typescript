@@ -1,8 +1,8 @@
-// import React, { Component } from 'react'
 import * as React from 'react'
 import './index.scss'
 import http from './../../api/index'
 import { Input,Radio,message,Table } from 'antd';
+// import { HashRouter as Router, Link} from 'react-router-dom';
 
 export default class Home extends  React.Component<any> {
   state={
@@ -36,7 +36,7 @@ export default class Home extends  React.Component<any> {
           title: '操作区',
           dataIndex: 'url',
           key: '5',
-          render:()=><a>播放</a>
+          render:()=><a href="#abc">播放</a>
         }
     ],
       data:[],//没用
@@ -74,7 +74,7 @@ export default class Home extends  React.Component<any> {
       super(props)
   }
   componentDidMount(){
-    // console.log(withRouter)
+    // console.log(H)
   }
   onChange=(e:any)=>{
       const str = e.target.value
@@ -131,9 +131,9 @@ export default class Home extends  React.Component<any> {
       }
     })
   }
-  toAbout(){
-    console.log(this.props.history)
-    this.props.history.push('/about')
+  toAbout(row:any){
+    console.log(row)
+    // this.props.history.push('/about/'+'123',)
   }
   serchSongs(){
 
@@ -149,9 +149,14 @@ export default class Home extends  React.Component<any> {
         </Radio.Group>
       </div>
       <Table columns={this.state.columns} 
+      locale={{emptyText: '暂无歌曲,'}}
        onRow={record => {
         return {
-          onClick: this.toAbout.bind(this), // 点击行
+          onClick: event=>{
+            this.props.history.push('/about/'+record.id+'/'+record.mid)
+            // this.props.history.push('/about/?songsId='+record.mid)
+            console.log(this,record)
+          }, // 点击行
           onDoubleClick: event => {},
           onContextMenu: event => {},
           onMouseEnter: event => {}, // 鼠标移入行
