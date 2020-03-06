@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './index.scss'
 import http from './../../api/index'
-import { Input,Radio,message,Table } from 'antd';
+import { Input,Radio,message,Table,Button } from 'antd';
 // import { HashRouter as Router, Link} from 'react-router-dom';
 
 export default class Home extends  React.Component<any> {
@@ -86,18 +86,15 @@ export default class Home extends  React.Component<any> {
           }
       })
   }
-  handleSizeChange(event:any){
-    this.setState(()=>{
-      return {searchType:event.target.value}
-    })
-    this.searchSongsByName(this.state.params)
-    // if (this.state.songs) {
-    //   if (event.target.value==='网易搜索') {
-    //     console.log(event.target.value)
-    //     this.onBlur()
-    //   } else {
-    //   }
-    // }
+  handleSizeChange(type:string){
+    switch (type) {
+      case 'qq':
+      this.searchSongsByName(this.state.params)
+        break;
+    
+      default:
+        break;
+    }
   }
   onBlur=()=>{
     http.searchSongsBySinger(this.state.songs).then((res:any)=>{
@@ -118,7 +115,6 @@ export default class Home extends  React.Component<any> {
   }
   searchSongsByName(params:object){
     http.searchSongsByName(params).then((res:any)=>{
-      // console.log('返回结果是res',res)
       if (res.code===0) {
         const {data}= res
           // console.log(data)
@@ -141,12 +137,10 @@ export default class Home extends  React.Component<any> {
   render(){
     return (<div className="first-page">
       <div className="search-input">
-        <Input size="default" value={this.state.songs} placeholder="请输入歌曲名称" 
+        <Input size="small" value={this.state.songs} placeholder="请输入歌曲名称" 
         onChange={this.onChange.bind(this)} />
-          <Radio.Group value={this.state.searchType} onChange={this.handleSizeChange.bind(this)}>
-          <Radio.Button value="网易搜索">网易搜索</Radio.Button>
-          <Radio.Button value="qq搜索">qq搜索</Radio.Button>
-        </Radio.Group>
+        <Button size="small" onClick={this.handleSizeChange.bind(this,'qq')}>QQ搜索</Button>
+        <Button size="small" onClick={this.handleSizeChange.bind(this,'wangyi')}>网易搜索</Button>
       </div>
       <Table columns={this.state.columns} 
       locale={{emptyText: '暂无歌曲,'}}
