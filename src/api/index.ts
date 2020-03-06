@@ -86,5 +86,12 @@ export default {
           id
         }
       })
-    }
+    },
+    searchPictures(data:object) {
+      return axios({
+        method: 'post',
+        url: '/local/picture',
+        data
+      })
+    },
   }

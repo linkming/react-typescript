@@ -3,6 +3,7 @@ import './index.scss'
 import Home from "./../home/index"
 import About from "./../about/index"
 import Chart from "./../chart/index"
+import Mine from "./../mine/index"
 import { HashRouter as Router, Route} from "react-router-dom";
 export default class Content extends Component {
     state={
@@ -20,6 +21,7 @@ export default class Content extends Component {
             <Route path="/home" component={Home} />
             <Route path="/about/:id/:mid" component={About} />
             <Route path="/chart" component={Chart} />
+            <Route path="/mine" component={Mine} />
           </Router>
        </main>
      </div>)
