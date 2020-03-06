@@ -7,7 +7,7 @@ import { Input,Radio,message,Table } from 'antd';
 export default class Home extends  React.Component<any> {
   state={
       songs:'',
-      searchType:'搜索歌名',
+      searchType:'qq搜索',
       size:'default',
       tableData:[],
       columns:[
@@ -70,9 +70,9 @@ export default class Home extends  React.Component<any> {
         needNewCode: 0,
       }
   }
-  constructor(props:any){
-      super(props)
-  }
+  // constructor(props:any){
+  //     super(props)
+  // }
   componentDidMount(){
     // console.log(H)
   }
@@ -92,7 +92,7 @@ export default class Home extends  React.Component<any> {
     })
     this.searchSongsByName(this.state.params)
     // if (this.state.songs) {
-    //   if (event.target.value==='搜索歌手') {
+    //   if (event.target.value==='网易搜索') {
     //     console.log(event.target.value)
     //     this.onBlur()
     //   } else {
@@ -144,8 +144,8 @@ export default class Home extends  React.Component<any> {
         <Input size="default" value={this.state.songs} placeholder="请输入歌曲名称" 
         onChange={this.onChange.bind(this)} />
           <Radio.Group value={this.state.searchType} onChange={this.handleSizeChange.bind(this)}>
-          <Radio.Button value="搜索歌手">搜索歌手</Radio.Button>
-          <Radio.Button value="搜索歌名">搜索歌名</Radio.Button>
+          <Radio.Button value="网易搜索">网易搜索</Radio.Button>
+          <Radio.Button value="qq搜索">qq搜索</Radio.Button>
         </Radio.Group>
       </div>
       <Table columns={this.state.columns} 

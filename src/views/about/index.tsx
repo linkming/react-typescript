@@ -39,11 +39,42 @@ export default class About extends React.Component<any> {
       })
      setTimeout(() => {
       this.getComment()
-     }, 0);
-    }
+    }, 0);
+    setTimeout(() => {
+      var scrollContainer = document.querySelector('.about')
+      console.log(scrollContainer)
+      if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', function(){
+          console.log('running')
+        });
+      }
+    }, 2500);
+  }
+    handleScroll=(event:any)=>{
+      //滚动条高度
+      alert('啊哈哈和')
+      let ctx=this;
+      console.log(ctx,this)
+      let clientHeight = document.documentElement.clientHeight; //可视区域高度
+      let scrollTop  = document.documentElement.scrollTop;  //滚动条滚动高度
+      let scrollHeight =document.documentElement.scrollHeight; //滚动内容高度
+      if(scrollTop>500){
+          ctx.setState({ style: { display: "block", } })
+      }else
+      {
+          ctx.setState({ style: { display: "none", } })
+      }
+      let res=scrollHeight-scrollTop-clientHeight;
+      if(res<=500){
+          ctx.setState({ styles: { display: "none", } })
+      }else {
+          ctx.setState({ styles: { display: "block", } })
+      }
+
+  }
+
     getComment() {
       http.getComment(this.state.params,this.props.match.params['mid']).then((res:any)=>{
-        console.log(JSON.parse(res.body)['hot_comment'].commenttotal)
         const arr = JSON.parse(res.body)['hot_comment'].commentlist.map((item:any)=>{
           return {
               actions: [<span key="comment-list-reply-to-0">回复</span>],
@@ -70,6 +101,7 @@ export default class About extends React.Component<any> {
               ),
             }
         })
+        console.log(arr)
         this.setState(()=>{
           return {data:arr,qqComment:JSON.parse(res.body)['hot_comment'].commenttotal}
         })

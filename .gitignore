@@ -6,5 +6,6 @@
 #过滤文件夹Debug,Release,obj
 Debug/
 service/
-Release/
+service/
+node_modules/
 obj/
