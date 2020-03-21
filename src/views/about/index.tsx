@@ -1,7 +1,7 @@
 import * as React from 'react'
 import http from './../../api'
 import './index.scss'
-import { Comment, Tooltip, List } from 'antd';
+import { Comment, Tooltip, List, Button } from 'antd';
 import moment from 'moment';
 
 export default class About extends React.Component<any> {
@@ -29,9 +29,26 @@ export default class About extends React.Component<any> {
         ct:24,
         cv:10101010
       },
+      information:{
+        format:'json205361747',
+        platform:'yqq',
+        cid:205361747,
+        songmid:'002huqnt3LOKML',
+        filename:'C400002huqnt3LOKML.m4a',
+        guid:126548448  
+      },
+      baseSongUrl:'',
+      songUrl:'http://ws.stream.qqmusic.qq.com/C400003lghpv0jfFXG.m4a?fromtag=0&guid=126548448&vkey=',
       qqComment:0,
       data:[]
     }
+    /**
+     * 4. 专辑封面
+        封面图片url要使用albumid字段拼接生成，格式：
+        比如albumid=8217，封面地址就是
+        http://imgcache.qq.com/music/photo/album_300/17/300_albumpic_8217_0.jpg，
+        可以在浏览器中打开验证。
+     */
     componentDidMount(){
       var params = Object.assign({},this.state.params,{topid:this.props.match.params['id']})
       this.setState(()=>{
@@ -39,10 +56,10 @@ export default class About extends React.Component<any> {
       })
      setTimeout(() => {
       this.getComment()
+      this.getToken()
     }, 0);
     setTimeout(() => {
       var scrollContainer = document.querySelector('.about')
-      console.log(scrollContainer)
       if (scrollContainer) {
         scrollContainer.addEventListener('scroll', function(){
           console.log('running')
@@ -72,7 +89,23 @@ export default class About extends React.Component<any> {
       }
 
   }
-
+  /**
+   * 获取歌曲token信息
+   */
+  getToken(){
+    var data = Object.assign({},this.state.information,{
+      songmid:this.props.match.params['mid'],
+      filename:'C400'+this.props.match.params['mid']+'.m4a',
+    })
+    http.songsToken(data).then((res:any)=>{
+      // console.log(res.body)
+      this.setState(()=>{
+        return {
+          songUrl:'http://ws.stream.qqmusic.qq.com/'+data.filename+'?fromtag=0&guid=126548448&vkey='+JSON.parse(res.body).data.items[0].vkey
+        }
+      })
+    })
+  }
     getComment() {
       http.getComment(this.state.params,this.props.match.params['mid']).then((res:any)=>{
         const arr = JSON.parse(res.body)['hot_comment'].commentlist.map((item:any)=>{
@@ -107,6 +140,10 @@ export default class About extends React.Component<any> {
         })
       })
     }
+    play(){
+      var el:any = document.getElementById('demo')
+      el.play()
+    }
    render(){
      return (<div className="about">
       <List
@@ -126,6 +163,10 @@ export default class About extends React.Component<any> {
           </li>
         )}
       />
+      <div>
+        <audio id="demo" src={this.state.songUrl}>播放歌曲</audio>
+        <Button onClick={this.play.bind(this)}>播放</Button>
+      </div>
      </div>)
   }
 }

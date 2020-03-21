@@ -19,7 +19,6 @@ interface AxiosResponse {
 interface AxiosPromise extends Promise<AxiosResponse> {
 }
 axios.interceptors.response.use(response => {
-  // console.log(response)
   if (response.status===200) {
     return response.data;
   }
@@ -61,6 +60,17 @@ export default {
         params
       })
     },
+    /**
+     * 
+     * @param 获取歌曲token
+     */
+    songsToken(params:object) {//在用
+      return axios({
+        method: 'get',
+        url: '/local/getToken',
+        params
+      })
+    },
     searchSongsByName(params:object) {//在用
       return axios({
         method: 'get',
@@ -89,9 +99,10 @@ export default {
     },
     searchPictures(data:object) {
       return axios({
+        data,
         method: 'post',
         url: '/local/picture',
-        data
+        responseType: 'arraybuffer'
       })
     },
   }
